@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username:
+  password:
+
+development:
+  <<: *default
+  database: tomodachi_development
+
+test:
+  <<: *default
+  database: tomodachi_test
+
+production:
+  <<: *default
+  database: tomodachi
