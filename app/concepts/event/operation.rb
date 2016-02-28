@@ -19,6 +19,14 @@ class Event::Create < Trailblazer::Operation
   end
 end
 
+class Event::Show < Trailblazer::Operation
+  include Model
+  model Event, :find
+
+  def process(params)
+  end
+end
+
 class Event::Update < Trailblazer::Operation
   include Model
   model Event, :update

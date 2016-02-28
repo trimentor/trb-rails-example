@@ -78,6 +78,18 @@ RSpec.describe Event::Create do
   end
 end
 
+RSpec.describe Event::Show do
+  it do
+    event = Event::Create.(event: {name: 'MyName', start_time: DateTime.now}).model
+
+    res, op = Event::Show.run(id: event.id)
+
+    expect(res).to eq(true)
+
+    expect(op.model.id).to eq(event.id)
+  end
+end
+
 RSpec.describe Event::Update do
   let(:start_time) { DateTime.now }
   let(:event) { Event::Create.(event: {name: 'MyName', start_time: start_time}).model }
