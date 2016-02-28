@@ -41,6 +41,9 @@ group :development, :test do
 
   # Testing
   gem 'rspec-rails', '~> 3.0'
+
+  # Debugging
+  gem 'pry'
 end
 
 group :development do
