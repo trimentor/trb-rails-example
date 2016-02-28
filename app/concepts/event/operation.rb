@@ -11,8 +11,6 @@ class Event::Create < Trailblazer::Operation
   end
 
   def process(params)
-    @model = Event.new
-
     validate(params[:event], @model) do
       contract.save
     end
