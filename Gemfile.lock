@@ -96,6 +96,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-nav (0.2.4)
+      pry (>= 0.9.10, < 0.11.0)
     puma (2.16.0)
     rack (2.0.0.alpha)
       json
@@ -214,6 +216,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   pg
   pry
+  pry-nav
   puma
   rails (>= 5.0.0.beta3, < 5.1)
   rspec-rails (~> 3.0)
