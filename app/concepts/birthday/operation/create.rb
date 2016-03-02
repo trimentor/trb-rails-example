@@ -9,11 +9,17 @@ class Birthday::Create < Trailblazer::Operation
 
   def process(params)
     validate(params[:birthday], model) do
-      event = create_event(params)
+      res, op = Birthday::Show.run(person_id: params[:birthday][:person_id])
 
-      @model = Birthday.create(person_id: params[:birthday][:person_id], event_id: event.id)
+      if !res
+        event = create_event(params)
+        @model = Birthday.create(person_id: params[:birthday][:person_id], event_id: event.id)
+      else
+        @model = op.model # Allow to display existing birthday info
+        errors.add(:person_id, 'can only have one birthday')
+      end
 
-      @valid = @model.valid? # Birthday::Create.run must return correct result
+      @valid = errors.empty? && @model.valid? # Birthday::Create.run must return correct result
     end
   end
 

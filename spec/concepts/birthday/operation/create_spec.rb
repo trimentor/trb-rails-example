@@ -39,4 +39,14 @@ RSpec.describe Birthday::Create do
       expect(op.errors.messages[:start_time]).to eq(["can't be blank"])
     end
   end
+
+  it 'can only have one birthday' do
+    Birthday::Create.(birthday: {start_time: start_time, person_id: person.id})
+
+    res, op = Birthday::Create.run(birthday: {start_time: start_time, person_id: person.id})
+
+    expect(res).to eq(false)
+
+    expect(op.errors.messages[:person_id]).to eq(['can only have one birthday'])
+  end
 end
