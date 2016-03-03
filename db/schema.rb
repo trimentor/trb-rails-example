@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302194816) do
+ActiveRecord::Schema.define(version: 20160303203728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "street_name",           null: false
+    t.string "street_number",         null: false
+    t.string "city_area_or_district"
+    t.string "city_town_or_village"
+    t.string "postal_code",           null: false
+    t.string "country",               null: false
+  end
+
+  add_index "addresses", ["city_area_or_district"], name: "index_addresses_on_city_area_or_district", using: :btree
+  add_index "addresses", ["city_town_or_village"], name: "index_addresses_on_city_town_or_village", using: :btree
+  add_index "addresses", ["country"], name: "index_addresses_on_country", using: :btree
+  add_index "addresses", ["postal_code"], name: "index_addresses_on_postal_code", using: :btree
+  add_index "addresses", ["street_name", "street_number", "postal_code", "country"], name: "by_street_postal_code_country", unique: true, using: :btree
 
   create_table "birthdays", force: :cascade do |t|
     t.integer "person_id", null: false
