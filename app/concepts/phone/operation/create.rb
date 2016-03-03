@@ -2,6 +2,8 @@ class Phone::Create < Trailblazer::Operation
   include Model
   model Phone, :create
 
+  # TODO: Implement Phonelib to validate the telephone numbers.
+  # https://github.com/daddyz/phonelib
   contract do
     property :person_id, validates: {presence: true}
     property :telephone_number, validates: {presence: true}
