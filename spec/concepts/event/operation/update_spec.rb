@@ -45,7 +45,7 @@ RSpec.describe Event::Update do
 
       expect(res).to eq(false)
 
-      expect(op.errors.messages[:name]).to eq(['can\'t be blank'])
+      expect(op.errors.messages[:name]).to eq(["can't be blank"])
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Event::Update do
 
       expect(res).to eq(false)
 
-      expect(op.errors.messages[:start_time]).to eq(['can\'t be blank'])
+      expect(op.errors.messages[:start_time]).to eq(["can't be blank"])
     end
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe Event::Show do
     end
   end
 
-  context 'when id doesn\'t exist' do
+  context "when id doesn't exist" do
     it do
       expect{ Event::Show.run(id: -1).to raise_error(ActiveRecord::RecordNotFound) }
     end
