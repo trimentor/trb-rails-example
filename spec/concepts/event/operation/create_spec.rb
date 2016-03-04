@@ -49,13 +49,10 @@ RSpec.describe Event::Create do
     end
   end
 
-  context 'without name' do
+  context 'when name is blank' do
     it do
       res, op = Event::Create.run(event: {
-        location: 'MyLocation',
-        start_time: start_time,
-        end_time: end_time,
-        description: 'MyDescription'
+        name: '',
       })
 
       expect(res).to eq(false)
@@ -66,13 +63,10 @@ RSpec.describe Event::Create do
     end
   end
 
-  context 'without start_time' do
+  context 'when start_time is blank' do
     it do
       res, op = Event::Create.run(event: {
-        name: 'MyName',
-        location: 'MyLocation',
-        end_time: end_time,
-        description: 'MyDescription'
+        start_time: nil
       })
 
       expect(res).to eq(false)

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Event::Show do
   context 'when id exists' do
-    it 'returns the event' do
+    it 'can be shown' do
       event = Event::Create.(event: {name: 'MyName', start_time: DateTime.now}).model
 
       res, op = Event::Show.run(id: event.id)
