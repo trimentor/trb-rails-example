@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303203728) do
+ActiveRecord::Schema.define(version: 20160304190010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20160303203728) do
   add_index "birthdays", ["event_id"], name: "index_birthdays_on_event_id", using: :btree
   add_index "birthdays", ["person_id", "event_id"], name: "index_birthdays_on_person_id_and_event_id", unique: true, using: :btree
   add_index "birthdays", ["person_id"], name: "index_birthdays_on_person_id", using: :btree
+
+  create_table "domiciles", force: :cascade do |t|
+    t.integer "person_id"
+    t.integer "address_id"
+  end
+
+  add_index "domiciles", ["address_id"], name: "index_domiciles_on_address_id", using: :btree
+  add_index "domiciles", ["person_id"], name: "index_domiciles_on_person_id", using: :btree
 
   create_table "emails", force: :cascade do |t|
     t.integer "person_id"
