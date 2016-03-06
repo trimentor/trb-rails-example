@@ -40,7 +40,7 @@ group :development, :test do
   gem 'byebug'
 
   # Testing
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '3.5.0.beta1'
 
   # Debugging
   gem 'pry'
