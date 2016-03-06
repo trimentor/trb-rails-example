@@ -3,12 +3,17 @@ class Address::Create < Trailblazer::Operation
   model Address, :create
 
   contract do
-    property :street_name, validates: {presence: true}
-    property :street_number, validates: {presence: true}
+    property :street_name
+    property :street_number
     property :city_area_or_district
     property :city_town_or_village
-    property :postal_code, validates: {presence: true}
-    property :country, validates: {presence: true}
+    property :postal_code
+    property :country
+
+    validates :street_name, presence: true
+    validates :street_number, presence: true
+    validates :postal_code, presence: true
+    validates :country, presence: true
 
     validate :street_postal_code_country_uniqueness
 

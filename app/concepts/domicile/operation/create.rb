@@ -3,8 +3,11 @@ class Domicile::Create < Trailblazer::Operation
   model Domicile, :create
 
   contract do
-    property :person_id,  validates: {presence: true}
-    property :address_id, validates: {presence: true}
+    property :person_id
+    property :address_id
+
+    validates :person_id, presence: true
+    validates :address_id, presence: true
 
     validate :can_only_have_one_domicile
 

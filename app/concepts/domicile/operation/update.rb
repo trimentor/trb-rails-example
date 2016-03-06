@@ -1,15 +1,10 @@
-class Domicile::Update < Trailblazer::Operation
-  include Model
-  model Domicile, :update
+class Domicile::Update < Domicile::Create
+  action :update
 
   contract do
-    property :person_id,  validates: {presence: true}
-    property :address_id, validates: {presence: true}
-  end
-
-  def process(params)
-    validate(params[:domicile], @model) do
-      contract.save
+    def can_only_have_one_domicile
+      # Overwrite validation defined in Domicile::Create.
+      # Do nothing.
     end
   end
 end

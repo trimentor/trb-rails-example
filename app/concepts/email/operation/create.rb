@@ -3,9 +3,13 @@ class Email::Create < Trailblazer::Operation
   model Email, :create
 
   contract do
-    property :person_id, validates: {presence: true}
-    property :address, validates: {presence: true}
-    property :category, validates: {inclusion: {in: Email.categories.values}}
+    property :person_id
+    property :address
+    property :category
+
+    validates :person_id, presence: true
+    validates :address, presence: true
+    validates :category, inclusion: {in: Email.categories.values}
   end
 
   def process(params)

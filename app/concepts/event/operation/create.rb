@@ -3,11 +3,14 @@ class Event::Create < Trailblazer::Operation
   model Event, :create
 
   contract do
-    property :name, validates: {presence: true}
+    property :name
     property :location
-    property :start_time, validates: {presence: true}
+    property :start_time
     property :end_time
     property :description
+
+    validates :name, presence: true
+    validates :start_time, presence: true
   end
 
   def process(params)

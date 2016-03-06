@@ -3,9 +3,11 @@ class Person::Create < Trailblazer::Operation
   model Person, :create
 
   contract do
-    property :first_name, validates: {presence: true}
+    property :first_name
     property :middle_name
     property :last_name
+
+    validates :first_name, presence: true
   end
 
   def process(params)
