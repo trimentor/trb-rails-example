@@ -228,7 +228,6 @@ DEPENDENCIES
   trailblazer
   trailblazer-rails
   turbolinks (~> 5.x)
-  tzinfo-data
   web-console (~> 3.0)
 
 BUNDLED WITH
