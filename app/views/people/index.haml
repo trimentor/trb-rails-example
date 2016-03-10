@@ -1,0 +1,5 @@
+= link_to "New person", new_person_path
+
+- @model.each do |person|
+  %hr
+  = concept("person/cell", person)

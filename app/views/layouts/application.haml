@@ -9,4 +9,10 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
 
   %body
+    - flash.select{|k, v| v.present?}.each do |context, message|
+      %div{class: context}
+        = message
+
+      %hr
+
     = yield

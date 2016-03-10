@@ -1,0 +1,15 @@
+%div
+  %strong First name
+  = first_name
+
+%div
+  %strong Middle name
+  = middle_name
+
+%div
+  %strong Last name
+  = last_name
+
+= link_to "Edit person", edit_person_path(model)
+
+= link_to "Delete person", model, method: :delete

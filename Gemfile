@@ -50,6 +50,7 @@ group :development, :test do
 
   # Testing
   gem 'rspec-rails', '3.5.0.beta1'
+  gem 'capybara'
 
   # Debugging
   gem 'pry'
