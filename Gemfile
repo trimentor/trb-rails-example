@@ -35,6 +35,15 @@ gem 'trailblazer'
 gem 'trailblazer-rails'
 gem 'cells'
 
+# HTML templating engine
+gem 'haml', github: 'haml/haml', ref: '7c7c169'
+
+# Haml integration for Cells
+gem 'cells-haml'
+
+# Rails forms made easy
+gem 'simple_form'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
