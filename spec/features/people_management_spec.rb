@@ -4,13 +4,13 @@ RSpec.describe 'people management', type: :feature do
   scenario 'User creates a new person' do
     visit '/people'
 
-    click_link 'New person'
+    click_link 'New Person'
 
     fill_in 'First name',  with: 'MyFirstName'
     fill_in 'Middle name', with: 'MyMiddleName'
     fill_in 'Last name',   with: 'MyLastName'
 
-    click_button 'Create person'
+    click_button 'Create Person'
 
     expect(page).to have_text('MyFirstName')
     expect(page).to have_text('MyMiddleName')
@@ -24,13 +24,13 @@ RSpec.describe 'people management', type: :feature do
 
     visit "/people/#{op.model.id}"
 
-    click_link 'Edit person'
+    click_link 'Edit Person'
 
     fill_in 'First name',  with: 'MyFirstName'
     fill_in 'Middle name', with: 'MyMiddleName'
     fill_in 'Last name',   with: 'MyLastName'
 
-    click_button 'Update person'
+    click_button 'Update Person'
 
     expect(page).to have_text('Person has been updated successfully!')
 
@@ -46,7 +46,7 @@ RSpec.describe 'people management', type: :feature do
 
     visit "/people/#{op.model.id}"
 
-    click_link 'Delete person'
+    click_link 'Delete Person'
 
     expect(page).to have_text('Person has been deleted successfully!')
   end
