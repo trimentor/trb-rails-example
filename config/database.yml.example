@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: tomodachi_development
+  database: trb_example_development
 
 test:
   <<: *default
-  database: tomodachi_test
+  database: trb_example_test
 
 production:
   <<: *default
-  database: tomodachi
+  database: trb_example
