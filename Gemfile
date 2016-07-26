@@ -49,7 +49,7 @@ group :development, :test do
   gem 'byebug'
 
   # Testing
-  gem 'rspec-rails', '3.5.0.beta1'
+  gem 'rspec-rails'
   gem 'capybara'
 
   # Debugging
