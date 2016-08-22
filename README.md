@@ -15,7 +15,7 @@ Follow the installation instructions on [https://www.docker.com](https://www.doc
 
 0. Run `cp config/database.yml.example config/database.yml` to create the database configuration file
 0. Update the file if necessary, be sure to use the correct environment variables and host names available to your Rails app
-0. Run `docker-compose run web rake db:create db:setup` to create and set up the database
+0. Run `docker-compose run web rails db:create db:setup` to create and set up the database
 
 ## Launching the web server
 
