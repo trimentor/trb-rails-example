@@ -2,15 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Event::Update do
   let(:start_time) { DateTime.now }
-  let(:event) { Event::Create.(event: {name: 'MyName', start_time: start_time}).model }
+  let(:event) { Event::Create.({name: 'MyName', start_time: start_time})["model"] }
 
   context 'when valid' do
     it do
       Event::Update.(
         id: event.id,
-        event: {
-          name: 'UpdateName'
-        }
+        name: 'UpdateName'
       )
 
       event.reload
@@ -36,31 +34,27 @@ RSpec.describe Event::Update do
 
   context 'when name is blank' do
     it do
-      res, op = Event::Update.run(
+      res = Event::Update.(
         id: event.id,
-        event: {
-          name: ''
-        }
+        name: ''
       )
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.errors.messages[:name]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:name]).to eq(["can't be blank"])
     end
   end
 
   context 'when start_time is blank' do
     it do
-      res, op = Event::Update.run(
+      res = Event::Update.(
         id: event.id,
-        event: {
-          start_time: ''
-        }
+        start_time: ''
       )
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.errors.messages[:start_time]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:start_time]).to eq(["can't be blank"])
     end
   end
 end

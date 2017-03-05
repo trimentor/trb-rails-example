@@ -6,7 +6,7 @@ RSpec.describe Event::Create do
 
   context 'when valid' do
     it do
-      op = Event::Create.(event: {
+      res = Event::Create.({
         name: 'MyName',
         location: 'MyLocation',
         start_time: start_time,
@@ -14,7 +14,7 @@ RSpec.describe Event::Create do
         description: 'MyDescription'
       })
 
-      event = op.model
+      event = res["model"]
 
       expect(event.persisted?).to eq(true)
 
@@ -30,50 +30,50 @@ RSpec.describe Event::Create do
     end
 
     it do
-      res, op = Event::Create.run(event: {
+      res = Event::Create.({
         name: 'MyName',
         start_time: start_time
       })
 
-      expect(res).to eq(true)
+      expect(res.success?).to eq(true)
     end
   end
 
   context 'when invalid' do
     it do
-      res, op = Event::Create.run(event: {})
+      res = Event::Create.({})
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
     end
   end
 
   context 'when name is blank' do
     it do
-      res, op = Event::Create.run(event: {
+      res = Event::Create.({
         name: '',
       })
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:name]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:name]).to eq(["can't be blank"])
     end
   end
 
   context 'when start_time is blank' do
     it do
-      res, op = Event::Create.run(event: {
+      res = Event::Create.({
         start_time: nil
       })
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:start_time]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:start_time]).to eq(["can't be blank"])
     end
   end
 end

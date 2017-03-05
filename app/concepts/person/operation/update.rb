@@ -1,3 +1,3 @@
 class Person::Update < Person::Create
-  action :update
+  step Model(Person, :update), override: true
 end

@@ -1,7 +1,5 @@
 class Domicile::Show < Trailblazer::Operation
-  include Model
-  model Domicile, :find
+  extend Contract::DSL
 
-  def process(params)
-  end
+  step Model(Domicile, :find)
 end

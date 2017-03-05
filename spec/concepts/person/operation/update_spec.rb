@@ -1,19 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Person::Update do
-  let(:person) { Person::Create.(person: {
+  let(:person) { Person::Create.({
     first_name: 'MyFirstName',
     middle_name: 'MyMiddleName',
-    last_name: 'MyLastName'}).model
+    last_name: 'MyLastName'})["model"]
   }
 
   context 'when valid' do
     it do
       Person::Update.(
         id: person.id,
-        person: {
-          first_name: 'UpdateFirstName'
-        }
+        first_name: 'UpdateFirstName'
       )
 
       person.reload
@@ -24,16 +22,14 @@ RSpec.describe Person::Update do
 
   context 'when first_name is blank' do
     it do
-      res, op = Person::Update.run(
+      res = Person::Update.(
         id: person.id,
-        person: {
-          first_name: ''
-        }
+        first_name: ''
       )
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.errors.messages[:first_name]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:first_name]).to eq(["can't be blank"])
     end
   end
 end

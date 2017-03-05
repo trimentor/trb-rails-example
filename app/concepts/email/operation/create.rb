@@ -1,6 +1,5 @@
 class Email::Create < Trailblazer::Operation
-  include Model
-  model Email, :create
+  extend Contract::DSL
 
   contract do
     property :person_id
@@ -12,9 +11,8 @@ class Email::Create < Trailblazer::Operation
     validates :category, inclusion: {in: Email.categories.values}
   end
 
-  def process(params)
-    validate(params[:email], @model) do
-      contract.save
-    end
-  end
+  step Model(Email, :new)
+  step Contract::Build()
+  step Contract::Validate()
+  step Contract::Persist()
 end

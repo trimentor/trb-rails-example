@@ -1,17 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Email::Create do
-  let(:person) { Person::Create.(person: {first_name: 'MyFirstName'}).model }
+  let(:person) { Person::Create.({first_name: 'MyFirstName'})["model"] }
 
   context 'when valid' do
     it do
-      op = Email::Create.(email: {
+      res = Email::Create.({
         person_id: person.id,
         address: 'email@example.com',
         category: Email.categories[:personal_use]
       })
 
-      email = op.model
+      email = res["model"]
+
+      expect(res.success?).to eq(true)
 
       expect(email.persisted?).to eq(true)
 
@@ -27,17 +29,17 @@ RSpec.describe Email::Create do
 
   context 'when a person has many emails' do
     it do
-      email1 = Email::Create.(email: {
+      email1 = Email::Create.({
         person_id: person.id,
         address: 'email1@example.com',
         category: Email.categories[:personal_use]
-      }).model
+      })["model"]
 
-      email2 = Email::Create.(email: {
+      email2 = Email::Create.({
         person_id: person.id,
         address: 'email2@example.com',
         category: Email.categories[:work_related]
-      }).model
+      })["model"]
 
       expect(person.emails).to include(email1)
 
@@ -47,48 +49,48 @@ RSpec.describe Email::Create do
 
   context 'when person_id is blank' do
     it do
-      res, op = Email::Create.run(email: {
+      res = Email::Create.({
         address: 'email@example.com',
         category: Email.categories[:personal_use]
       })
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:person_id]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:person_id]).to eq(["can't be blank"])
     end
   end
 
   context 'when address is blank' do
     it do
-      res, op = Email::Create.run(email: {
+      res = Email::Create.({
         person_id: person.id,
         address: '',
         category: Email.categories[:personal_use]
       })
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:address]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:address]).to eq(["can't be blank"])
     end
   end
 
   context 'when category is not valid' do
     it do
-      res, op = Email::Create.run(email: {
+      res = Email::Create.({
         person_id: person.id,
         address: 'email@example.com',
         category: -1
       })
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:category]).to eq(['is not included in the list'])
+      expect(res["contract.default"].errors.messages[:category]).to eq(['is not included in the list'])
     end
   end
 end

@@ -1,8 +1,4 @@
 class Email::Delete < Trailblazer::Operation
-  include Model
-  model Email, :find
-
-  def process(params)
-    model.destroy
-  end
+  step Model(Email, :find)
+  step -> (options) { options["model"].destroy }
 end

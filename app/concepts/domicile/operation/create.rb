@@ -1,6 +1,5 @@
 class Domicile::Create < Trailblazer::Operation
-  include Model
-  model Domicile, :create
+  extend Contract::DSL
 
   contract do
     property :person_id
@@ -18,9 +17,8 @@ class Domicile::Create < Trailblazer::Operation
     end
   end
 
-  def process(params)
-    validate(params[:domicile], @model) do
-      contract.save
-    end
-  end
+  step Model(Domicile, :new)
+  step Contract::Build()
+  step Contract::Validate()
+  step Contract::Persist()
 end

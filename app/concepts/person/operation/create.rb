@@ -1,6 +1,5 @@
 class Person::Create < Trailblazer::Operation
-  include Model
-  model Person, :create
+  extend Contract::DSL
 
   contract do
     property :first_name
@@ -10,9 +9,8 @@ class Person::Create < Trailblazer::Operation
     validates :first_name, presence: true
   end
 
-  def process(params)
-    validate(params[:person], @model) do
-      contract.save
-    end
-  end
+  step Model(Person, :new)
+  step Contract::Build()
+  step Contract::Validate()
+  step Contract::Persist()
 end

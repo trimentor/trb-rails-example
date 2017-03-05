@@ -1,8 +1,4 @@
 class Event::Delete < Trailblazer::Operation
-  include Model
-  model Event, :find
-
-  def process(params)
-    model.destroy
-  end
+  step Model(Event, :find)
+  step -> (options) { options["model"].destroy }
 end

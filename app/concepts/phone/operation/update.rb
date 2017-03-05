@@ -1,3 +1,3 @@
 class Phone::Update < Phone::Create
-  action :update
+  step Model(Phone, :update), override: true
 end
