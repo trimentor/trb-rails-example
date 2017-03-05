@@ -1,42 +1,46 @@
 class PeopleController < ApplicationController
   def index
-    run Person::Index
+    @people = Person::Index.()["model"]
   end
 
   def show
-    run Person::Show do |op|
-      render html: concept('person/cell', op.model), layout: true
-    end
+    model = Person::Show.(id: params[:id])["model"]
+    render html: concept('person/cell', model), layout: true
   end
 
   def new
-    form Person::Create
+    @form = Person::Create.(params[:person])["model"]
   end
 
   def create
-    run Person::Create do |op|
-      return redirect_to person_path(op.model)
+    res = Person::Create.(params[:person])
+    if res.success?
+      redirect_to person_path(res["model"])
+    else
+      @form = res["model"]
+      render :new
     end
-
-    render :new
   end
 
   def edit
-    form Person::Update
+    @form = Person::Update.(id: params[:id])["model"]
     render :new
   end
 
   def update
-    run Person::Update do |op|
+    res = Person::Update.({id: params[:id]}.merge(params[:person]))
+    if res.success?
       flash[:notice] = "Person has been updated successfully!"
-      return redirect_to person_path(op.model)
+      redirect_to person_path(res["model"])
+    else
+      @form = res["model"]
+      render :new
     end
-
-    render :new
   end
 
   def destroy
-    run Person::Delete do |op|
+    res = Person::Delete.(id: params[:id])
+    if res.success?
       flash[:notice] = "Person has been deleted successfully!"
     end
 
