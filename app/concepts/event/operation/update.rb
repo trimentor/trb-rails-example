@@ -1,3 +1,3 @@
 class Event::Update < Event::Create
-  step Model(Event, :update), override: true
+  step Model(Event, :find), override: true
 end

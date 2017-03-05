@@ -1,3 +1,3 @@
 class Phone::Update < Phone::Create
-  step Model(Phone, :update), override: true
+  step Model(Phone, :find), override: true
 end

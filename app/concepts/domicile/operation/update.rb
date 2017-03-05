@@ -6,5 +6,5 @@ class Domicile::Update < Domicile::Create
     end
   end
 
-  step Model(Domicile, :update), override: true
+  step Model(Domicile, :find), override: true
 end

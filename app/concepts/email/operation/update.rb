@@ -1,3 +1,3 @@
 class Email::Update < Email::Create
-  step Model(Email, :update), override: true
+  step Model(Email, :find), override: true
 end

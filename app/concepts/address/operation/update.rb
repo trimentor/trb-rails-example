@@ -1,3 +1,3 @@
 class Address::Update < Address::Create
-  step Model(Address, :update), override: true
+  step Model(Address, :find), override: true
 end
