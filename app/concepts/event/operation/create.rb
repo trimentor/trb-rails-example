@@ -1,6 +1,5 @@
 class Event::Create < Trailblazer::Operation
-  include Model
-  model Event, :create
+  extend Contract::DSL
 
   contract do
     property :name
@@ -13,9 +12,8 @@ class Event::Create < Trailblazer::Operation
     validates :start_time, presence: true
   end
 
-  def process(params)
-    validate(params[:event], @model) do
-      contract.save
-    end
-  end
+  step Model(Event, :new)
+  step Contract::Build()
+  step Contract::Validate()
+  step Contract::Persist()
 end

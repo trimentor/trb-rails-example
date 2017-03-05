@@ -1,42 +1,40 @@
 class Birthday::Create < Trailblazer::Operation
-  include Model
-  model Birthday, :create
+  extend Contract::DSL
 
   contract do
     property :person_id, validates: {presence: true}
     property :event_id # Set if param start_time is present and event is created
   end
 
-  def process(params)
-    validate(params[:birthday], model) do
-      res, op = Birthday::Show.run(person_id: params[:birthday][:person_id])
+  step Model(Birthday, :new)
+  step Contract::Build()
+  step :find_birthday!
+  success :create_event!
+  step Contract::Validate()
+  step Contract::Persist()
 
-      if !res
-        event = create_event(params)
-        @model = Birthday.create(person_id: params[:birthday][:person_id], event_id: event.id)
-      else
-        @model = op.model # Allow to display existing birthday info
-        errors.add(:person_id, 'can only have one birthday')
+  def find_birthday!(options, params:, **)
+    res = Birthday::Show.(person_id: params[:person_id])
+    if res.success?
+      options["contract.default"].errors.messages[:person_id] = ['can only have one birthday']
+      return false
+    else
+      return true
+    end
+  end
+
+  def create_event!(options, params:, **)
+    options["model"].person_id = params[:person_id]
+
+    res = Event::Create.(name: 'birthday', start_time: params[:start_time])
+    if res.success?
+      params.merge!(event_id: res["model"].id)
+      options["model"].event_id = res["model"].id
+    else
+      res["contract.default"].errors.messages.map do |k, v|
+        options["contract.default"].errors.messages[k] = v
       end
-
-      @valid = errors.empty? && @model.valid? # Birthday::Create.run must return correct result
+      return false
     end
-  end
-
-  private
-
-  def create_event(params)
-    res, op = Event::Create.run(event: params[:birthday].merge(name: 'birthday'))
-
-    unless res
-      merge_event_operation_errors!(op)
-    end
-
-    op.model
-  end
-
-  def merge_event_operation_errors!(op)
-    self.errors.details.merge!(op.errors.details)
-    self.errors.messages.merge!(op.errors.messages)
   end
 end

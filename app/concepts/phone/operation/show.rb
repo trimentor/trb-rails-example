@@ -1,7 +1,3 @@
 class Phone::Show < Trailblazer::Operation
-  include Model
-  model Phone, :find
-
-  def process(params)
-  end
+  step Model(Phone, :find)
 end

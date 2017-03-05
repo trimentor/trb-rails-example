@@ -1,7 +1,3 @@
 class Person::Show < Trailblazer::Operation
-  include Model
-  model Person, :find
-
-  def process(params)
-  end
+  step Model(Person, :find)
 end

@@ -1,6 +1,5 @@
 class Address::Create < Trailblazer::Operation
-  include Model
-  model Address, :create
+  extend Contract::DSL
 
   contract do
     property :street_name
@@ -29,9 +28,8 @@ class Address::Create < Trailblazer::Operation
     end
   end
 
-  def process(params)
-    validate(params[:address], @model) do
-      contract.save
-    end
-  end
+  step Model(Address, :new)
+  step Contract::Build()
+  step Contract::Validate()
+  step Contract::Persist()
 end

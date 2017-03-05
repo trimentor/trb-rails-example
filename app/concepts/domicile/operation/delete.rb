@@ -1,8 +1,6 @@
 class Domicile::Delete < Trailblazer::Operation
-  include Model
-  model Domicile, :find
+  extend Contract::DSL
 
-  def process(params)
-    model.destroy
-  end
+  step Model(Domicile, :find)
+  step -> (options) { options["model"].destroy }
 end

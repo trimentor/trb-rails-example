@@ -1,8 +1,4 @@
 class Person::Delete < Trailblazer::Operation
-  include Model
-  model Person, :find
-
-  def process(params)
-    model.destroy
-  end
+  step Model(Person, :find)
+  step -> (options) { options["model"].destroy }
 end

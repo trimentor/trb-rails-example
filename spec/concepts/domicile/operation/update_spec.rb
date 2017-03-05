@@ -1,42 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe Domicile::Update do
-  let(:person) { Person::Create.(person: {first_name: 'MyFirstName'}).model }
+  let(:person) { Person::Create.({first_name: 'MyFirstName'})["model"] }
 
   let(:address) do
-    Address::Create.(address: {
+    Address::Create.({
       street_name: 'MyStreetName',
       street_number: 'MyStreetNumber',
       postal_code: 'MyPostalCode',
       country: 'MyCountry'
-    }).model
+    })["model"]
   end
 
   let(:domicile) do
-    Domicile::Create.(domicile: {
+    Domicile::Create.({
       person_id: person.id,
       address_id: address.id
-    }).model
+    })["model"]
   end
 
   context 'when valid' do
     it do
-      new_address = Address::Create.(address: {
+      new_address = Address::Create.({
         street_name: 'MyStreetName',
         street_number: 'MyStreetNumber',
         postal_code: 'MyPostalCode',
         country: 'MyOtherCountry'
-      }).model
+      })["model"]
 
-      res, op = Domicile::Update.run({
+      res = Domicile::Update.({
         id: domicile.id,
-        domicile: {
-          person_id: person.id,
-          address_id: new_address.id
-        }
+        person_id: person.id,
+        address_id: new_address.id
       })
 
-      expect(res).to eq(true)
+      expect(res.success?).to eq(true)
 
       expect(person.domicile.address).to eq(new_address)
     end

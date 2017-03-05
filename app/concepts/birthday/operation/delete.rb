@@ -1,8 +1,6 @@
 class Birthday::Delete < Trailblazer::Operation
-  include Model
-  model Birthday, :find
+  extend Contract::DSL
 
-  def process(params)
-    model.destroy
-  end
+  step Model(Birthday, :find)
+  step -> (options) { options["model"].destroy }
 end

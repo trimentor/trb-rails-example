@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Birthday::Create do
   let(:start_time) { DateTime.now }
-  let(:person) { Person::Create.(person: {first_name: 'MyFirstName'}).model }
+  let(:person) { Person::Create.({first_name: 'MyFirstName'})["model"] }
 
   context 'when valid' do
     it do
-      birthday = Birthday::Create.(birthday: {start_time: start_time, person_id: person.id}).model
+      res = Birthday::Create.({start_time: start_time, person_id: person.id})
+
+      birthday = res["model"]
+
+      expect(res.success?).to eq(true)
 
       expect(birthday.persisted?).to eq(true)
 
@@ -18,35 +22,35 @@ RSpec.describe Birthday::Create do
 
   context 'when person_id is blank' do
     it do
-      res, op = Birthday::Create.run(birthday: {start_time: start_time})
+      res = Birthday::Create.({start_time: start_time})
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:person_id]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:person_id]).to eq(["can't be blank"])
     end
   end
 
   context 'when start_time is blank' do
     it do
-      res, op = Birthday::Create.run(birthday: {person_id: person.id})
+      res = Birthday::Create.({person_id: person.id})
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:start_time]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:start_time]).to eq(["can't be blank"])
     end
   end
 
   it 'can only have one birthday' do
-    Birthday::Create.(birthday: {start_time: start_time, person_id: person.id})
+    Birthday::Create.({start_time: start_time, person_id: person.id})
 
-    res, op = Birthday::Create.run(birthday: {start_time: start_time, person_id: person.id})
+    res = Birthday::Create.({start_time: start_time, person_id: person.id})
 
-    expect(res).to eq(false)
+    expect(res.failure?).to eq(true)
 
-    expect(op.errors.messages[:person_id]).to eq(['can only have one birthday'])
+    expect(res["contract.default"].errors.messages[:person_id]).to eq(['can only have one birthday'])
   end
 end

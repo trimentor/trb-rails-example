@@ -3,13 +3,15 @@ require 'rails_helper'
 RSpec.describe Person::Create do
   context 'when valid' do
     it do
-      op = Person::Create.(person: {
+      res = Person::Create.({
         first_name: 'MyFirstName',
         middle_name: 'MyMiddleName',
         last_name: 'MyLastName'
       })
 
-      person = op.model
+      expect(res.success?).to eq(true)
+
+      person = res["model"]
 
       expect(person.persisted?).to eq(true)
 
@@ -23,15 +25,15 @@ RSpec.describe Person::Create do
 
   context 'when first_name is blank' do
     it do
-      res, op = Person::Create.run(person: {
+      res = Person::Create.({
         first_name: ''
       })
 
-      expect(res).to eq(false)
+      expect(res.failure?).to eq(true)
 
-      expect(op.model.persisted?).to eq(false)
+      expect(res["model"].persisted?).to eq(false)
 
-      expect(op.errors.messages[:first_name]).to eq(["can't be blank"])
+      expect(res["contract.default"].errors.messages[:first_name]).to eq(["can't be blank"])
     end
   end
 end

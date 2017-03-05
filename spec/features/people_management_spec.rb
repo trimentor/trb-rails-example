@@ -18,11 +18,11 @@ RSpec.describe 'people management', type: :feature do
   end
 
   scenario 'User updates a person' do
-    op = Person::Create.(person: {
+    res = Person::Create.({
       first_name: 'name'
     })
 
-    visit "/people/#{op.model.id}"
+    visit "/people/#{res["model"].id}"
 
     click_link 'Edit Person'
 
@@ -40,11 +40,11 @@ RSpec.describe 'people management', type: :feature do
   end
 
   scenario 'User deletes a person' do
-    op = Person::Create.(person: {
+    res = Person::Create.({
       first_name: 'name'
     })
 
-    visit "/people/#{op.model.id}"
+    visit "/people/#{res["model"].id}"
 
     click_link 'Delete Person'
 
