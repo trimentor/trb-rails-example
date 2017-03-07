@@ -1,13 +1,6 @@
 class Birthday::Create < Trailblazer::Operation
-  extend Contract::DSL
-
-  contract do
-    property :person_id, validates: {presence: true}
-    property :event_id # Set if param start_time is present and event is created
-  end
-
   step Model(Birthday, :new)
-  step Contract::Build()
+  step Contract::Build(constant: Birthday::Contract::Create)
   step :find_birthday!
   success :create_event!
   step Contract::Validate()
