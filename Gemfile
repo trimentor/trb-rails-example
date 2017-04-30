@@ -36,7 +36,7 @@ gem 'trailblazer-rails'
 gem 'cells-rails'
 
 # HTML templating engine
-gem 'haml', github: 'haml/haml', ref: '7c7c169'
+gem 'haml'
 
 # Haml integration for Cells
 gem 'cells-haml'
