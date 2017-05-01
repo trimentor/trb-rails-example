@@ -40,6 +40,8 @@ gem 'cells-haml'
 # Rails forms made easy
 gem 'simple_form'
 
+gem 'react_on_rails', '7.0.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
