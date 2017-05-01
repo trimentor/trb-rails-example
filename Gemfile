@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 # gem 'capistrano-rails', group: :development
 
 # http://trailblazer.to/
-gem 'trailblazer', '2.0.3'
+gem 'trailblazer', '2.0.5'
 gem 'trailblazer-rails'
 gem 'cells-rails'
 
