@@ -222,9 +222,6 @@ GEM
       reform-rails (>= 0.1.4, < 0.2.0)
       trailblazer (>= 2.0.0, < 2.1.0)
       trailblazer-loader (>= 0.1.0)
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uber (0.1.0)
@@ -265,7 +262,6 @@ DEPENDENCIES
   therubyracer
   trailblazer (= 2.0.5)
   trailblazer-rails
-  turbolinks (~> 5.x)
   web-console (~> 3.0)
 
 BUNDLED WITH
