@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
   end
 
   def update
-    res = Person::Update.({id: params[:id]}.merge(params[:person]))
+    res = Person::Update.({id: params[:id]}.merge(person_params))
     if res.success?
       flash[:notice] = "Person has been updated successfully!"
       redirect_to person_path(res["model"])
@@ -45,5 +45,11 @@ class PeopleController < ApplicationController
     end
 
     redirect_to people_path
+  end
+
+  private
+
+  def person_params
+    params.require(:person).permit(:first_name, :middle_name, :last_name)
   end
 end
