@@ -71,6 +71,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    debug_inspector (0.0.2)
     declarative (0.0.9)
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
@@ -251,6 +252,7 @@ DEPENDENCIES
   cells-haml
   cells-rails
   coffee-rails (~> 4.2.1)
+  debug_inspector
   haml
   jbuilder (~> 2.0)
   jquery-rails
