@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'people management', type: :feature do
-  scenario 'User creates a new person' do
+  xscenario 'User creates a new person' do
     visit '/people'
 
     click_link 'New Person'
@@ -17,7 +17,7 @@ RSpec.describe 'people management', type: :feature do
     expect(page).to have_text('MyLastName')
   end
 
-  scenario 'User updates a person' do
+  xscenario 'User updates a person' do
     res = Person::Create.({
       first_name: 'name'
     })
@@ -39,7 +39,7 @@ RSpec.describe 'people management', type: :feature do
     expect(page).to have_text('MyLastName')
   end
 
-  scenario 'User deletes a person' do
+  xscenario 'User deletes a person' do
     res = Person::Create.({
       first_name: 'name'
     })
