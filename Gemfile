@@ -59,6 +59,7 @@ group :development, :test do
   # Testing
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'json_spec'
 
   # Debugging
   gem 'pry'
