@@ -20,7 +20,7 @@
 import Person from './person'
 
 export default {
-  data: function () {
+  data () {
     return {
       people: []
     }
