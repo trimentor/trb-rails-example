@@ -24,3 +24,6 @@
 
 # Ignore ActionCable secrets.
 /config/cable.yml
+/public/packs
+/public/packs-test
+/node_modules
