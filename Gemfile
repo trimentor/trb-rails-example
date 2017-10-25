@@ -48,6 +48,9 @@ gem 'cells-haml'
 # Rails forms made easy
 gem 'simple_form'
 
+# REST-like API framework
+gem 'grape'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -56,6 +59,7 @@ group :development, :test do
   # Testing
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'json_spec'
 
   # Debugging
   gem 'pry'
