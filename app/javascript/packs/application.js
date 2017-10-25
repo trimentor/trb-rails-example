@@ -10,7 +10,6 @@ Vue.use(VueResource)
 import App from '../app'
 import PeopleList from '../people/list'
 
-
 const Foo = { template: '<div>foo</div>' }
 const Bar = { template: '<div>bar</div>' }
 
@@ -26,7 +25,7 @@ const router = new VueRouter({
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
+  new Vue({
     router
   }).$mount('#app')
 })
