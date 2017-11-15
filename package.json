@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
+    "axios": "^0.17.0",
     "coffeescript": "1.12.7",
     "eslint": "^4.9.0",
     "eslint-config-vue": "^2.0.2",

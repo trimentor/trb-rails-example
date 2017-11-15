@@ -17,27 +17,25 @@
 </template>
 
 <script>
-import Person from './person'
+import store from './store'
 
 export default {
-  data () {
-    return {
-      people: []
-    }
-  },
-
   methods: {
     fetch: function () {
-      this.$http.get('/api/people').then(response => {
-        this.people = response.body.map(data => {
-          return new Person(data)
-        })
+      store.dispatch('fetch').then(() => {
+        console.log('fetch people')
       })
     }
   },
 
   created: function () {
     this.fetch()
+  },
+
+  computed: {
+    people () {
+      return store.state.people
+    }
   }
 }
 </script>
